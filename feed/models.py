@@ -11,7 +11,11 @@ class Location(models.Model):
 
 
 class Website(models.Model):
-    pass
+    name = models.CharField(max_length=120)
+    type = models.CharField(max_length=90)
+    url = models.URLField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_updated_at = models.DateTimeField(auto_now=True)
 
 
 class Feed(models.Model):
@@ -19,4 +23,4 @@ class Feed(models.Model):
 
 
 class Category(models.Model):
-    pass)
+    pass
