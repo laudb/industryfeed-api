@@ -23,7 +23,14 @@ class Common(models.Model):
         abstract = True
 
 
-# Create your models here.
+class Feed(Common):
+    name = models.CharField(max_length=100)
+    code = models.UUIDField()
+
+    def __str__(self):
+        return self.name
+
+
 class Company(Common):
     signature = models.UUIDField()
     logo = models.ImageField()
@@ -41,6 +48,12 @@ class Location(Common):
     town = models.CharField(max_length=150)
     state = models.CharField(max_length=150)
     country = models.CharField(max_length=150)
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss",
+    )
 
     def __str__(self):
         return self.lat, self.long, self.country
@@ -50,14 +63,12 @@ class Website(Common):
     name = models.CharField(max_length=120)
     type = models.CharField(max_length=20, choices=WEBSITE_TYPES)
     url = models.URLField(max_length=200)
-
-    def __str__(self):
-        return self.name
-
-
-class Feed(Common):
-    name = models.CharField(max_length=100)
-    code = models.UUIDField()
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss",
+    )
 
     def __str__(self):
         return self.name
