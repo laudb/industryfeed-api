@@ -2,28 +2,40 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class CustomUser(AbstractUser):
-    pass
+WEBSITE_TYPES = [("WEBSITE", "Website"), ("SHOP", "Shop"), ("SOCIAL", "Social")]
+CATEGORY_TYPES = [("COMPANY", "Company"), ("BLOGGER", "Blogger")]
+
+
+class User(AbstractUser):
+    profile_photo = models.ImageField()
+    phone_number = models.CharField(max_length=20)
+    country = models.CharField(max_length=100)
 
     def __str__(self):
         return self.username
 
 
-# Create your models here.
-class Company(models.Model):
-    signature = models.UUIDField()
-    logo = models.ImageField()
-    name = models.CharField()
-    details = models.TextField()
-    is_active = models.BooleanField(default=False)
+class Common(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+# Create your models here.
+class Company(Common):
+    signature = models.UUIDField()
+    logo = models.ImageField()
+    name = models.CharField(max_length=120)
+    details = models.TextField()
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
 
 
-class Location(models.Model):
+class Location(Common):
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     long = models.DecimalField(max_digits=9, decimal_places=6)
     town = models.CharField(max_length=150)
@@ -34,18 +46,16 @@ class Location(models.Model):
         return self.lat, self.long, self.country
 
 
-class Website(models.Model):
+class Website(Common):
     name = models.CharField(max_length=120)
-    type = models.CharField(max_length=90)
+    type = models.CharField(max_length=20, choices=WEBSITE_TYPES)
     url = models.URLField(max_length=200)
-    created_at = models.DateTimeField(auto_now_add=True)
-    last_updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
 
 
-class Feed(models.Model):
+class Feed(Common):
     name = models.CharField(max_length=100)
     code = models.UUIDField()
 
@@ -53,9 +63,9 @@ class Feed(models.Model):
         return self.name
 
 
-class Category(models.Model):
+class Category(Common):
     name = models.CharField(max_length=100)
-    type = models.CharField(max_length=100)
+    type = models.CharField(max_length=50, choices=CATEGORY_TYPES)
 
     def __str__(self):
         return self.name
