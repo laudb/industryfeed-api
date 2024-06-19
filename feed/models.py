@@ -31,6 +31,7 @@ class Feed(Common):
         on_delete=models.CASCADE,
         related_name="%(app_label)s_%(class)s_related",
         related_query_name="%(app_label)s_%(class)ss",
+        null=True,
     )
 
     def __str__(self):
