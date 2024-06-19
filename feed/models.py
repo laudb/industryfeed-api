@@ -26,6 +26,12 @@ class Common(models.Model):
 class Feed(Common):
     name = models.CharField(max_length=100)
     code = models.UUIDField()
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss",
+    )
 
     def __str__(self):
         return self.name
