@@ -23,6 +23,17 @@ class Common(models.Model):
         abstract = True
 
 
+class Company(Common):
+    signature = models.UUIDField()
+    logo = models.ImageField()
+    name = models.CharField(max_length=120)
+    details = models.TextField()
+    is_active = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+
 class Feed(Common):
     name = models.CharField(max_length=100)
     code = models.UUIDField()
@@ -33,17 +44,11 @@ class Feed(Common):
         related_query_name="%(app_label)s_%(class)ss",
         null=True,
     )
-
-    def __str__(self):
-        return self.name
-
-
-class Company(Common):
-    signature = models.UUIDField()
-    logo = models.ImageField()
-    name = models.CharField(max_length=120)
-    details = models.TextField()
-    is_active = models.BooleanField(default=False)
+    company = models.ManyToManyField(
+        Company,
+        related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss",
+    )
 
     def __str__(self):
         return self.name
