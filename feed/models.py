@@ -7,8 +7,8 @@ CATEGORY_TYPES = [("COMPANY", "Company"), ("BLOGGER", "Blogger")]
 
 
 class User(AbstractUser):
-    profile_photo = models.ImageField()
-    phone_number = models.CharField(max_length=20)
+    profile_photo = models.ImageField(null=True)
+    phone_number = models.CharField(max_length=20, null=True)
     country = models.CharField(max_length=100)
 
     def __str__(self):
