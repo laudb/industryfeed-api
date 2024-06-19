@@ -3,15 +3,15 @@ from .models import User, Company, Feed, Location, Website
 
 
 class UserAdmin(admin.ModelAdmin):
-    fields = ["username", "profile_photo", "country", "created_at"]
+    fields = ["username", "profile_photo", "country"]
 
 
 class CompanyAdmin(admin.ModelAdmin):
-    fields = ["logo", "name", "is_active", "created_at"]
+    fields = ["logo", "name", "is_active"]
 
 
 class FeedAdmin(admin.ModelAdmin):
-    fields = ["name", "owner", "created_at"]
+    fields = ["name", "owner", "company"]
 
 
 class LocationAdmin(admin.ModelAdmin):
