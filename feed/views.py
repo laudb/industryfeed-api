@@ -26,6 +26,7 @@ class FeedViewSet(viewsets.ModelViewSet):
 
     queryset = Feed.objects.all()
     serializer_class = FeedSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class WebsiteViewSet(viewsets.ModelViewSet):
@@ -35,6 +36,7 @@ class WebsiteViewSet(viewsets.ModelViewSet):
 
     queryset = Website.objects.all()
     serializer_class = WebsiteSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class LocationViewSet(viewsets.ModelViewSet):
@@ -44,3 +46,4 @@ class LocationViewSet(viewsets.ModelViewSet):
 
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+    permission_classes = [permissions.IsAuthenticated]
