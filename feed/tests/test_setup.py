@@ -49,6 +49,7 @@ class CompanyTest(unittest.TestCase):
         """
         response = self.client.get("/api/v1/companies/")
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, [])
 
     def test_website_for_not_found_response(self):
         """
