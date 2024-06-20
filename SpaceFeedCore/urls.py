@@ -18,4 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-urlpatterns = [path("admin/", admin.site.urls), path("api/v1/", include("feed.urls"))]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/v1/", include("feed.urls")),
+    path("api/v1/auth", include("djsoser.urls")),
+    path("api/v1/auth", include("djsoser.urls.authtoken")),
+    path("api/v1/auth", include("djsoser.urls.jwt")),
+]
