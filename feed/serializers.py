@@ -3,6 +3,12 @@ from .models import Company, Feed, Website, Location
 from rest_framework import serializers
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "first_name", "last_name", "email", "country"]
+
+
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
