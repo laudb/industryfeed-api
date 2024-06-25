@@ -2,10 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-WEBSITE_TYPES = [("WEBSITE", "Website"), ("SHOP", "Shop"), ("SOCIAL", "Social")]
-CATEGORY_TYPES = [("COMPANY", "Company"), ("BLOGGER", "Blogger")]
-
-
 class User(AbstractUser):
     profile_photo = models.ImageField(null=True)
     phone_number = models.CharField(max_length=20, null=True)
@@ -27,6 +23,7 @@ class Company(Common):
     signature = models.UUIDField()
     logo = models.ImageField()
     name = models.CharField(max_length=120)
+    alias = models.CharField(max_length=120, blank=True, null=True)
     details = models.TextField()
     is_active = models.BooleanField(default=False)
 
@@ -57,8 +54,8 @@ class Feed(Common):
 class Location(Common):
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     long = models.DecimalField(max_digits=9, decimal_places=6)
-    town = models.CharField(max_length=150)
-    state = models.CharField(max_length=150)
+    town = models.CharField(max_length=150, blank=True, null=True)
+    state = models.CharField(max_length=150, blank=True, null=True)
     country = models.CharField(max_length=150)
     company = models.ForeignKey(
         Company,
@@ -72,6 +69,7 @@ class Location(Common):
 
 
 class Website(Common):
+    WEBSITE_TYPES = [("WEBSITE", "Website"), ("SHOP", "Shop"), ("SOCIAL", "Social")]
     name = models.CharField(max_length=120)
     type = models.CharField(max_length=20, choices=WEBSITE_TYPES)
     url = models.URLField(max_length=200)
@@ -87,6 +85,7 @@ class Website(Common):
 
 
 class Category(Common):
+    CATEGORY_TYPES = [("COMPANY", "Company"), ("BLOGGER", "Blogger")]
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=50, choices=CATEGORY_TYPES)
 
