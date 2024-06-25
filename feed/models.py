@@ -14,7 +14,7 @@ class User(AbstractUser):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "photo": self.profile_photo,
-            "country": self.country
+            "country": self.country,
         }
 
     def __str__(self):
@@ -78,9 +78,9 @@ class Location(Common):
     def gps(self):
         "Returns latitude, longitude."
         return self.lat, self.long
-    
+
     @property
-    def address(self)
+    def address(self):
         "Returns country, state, town"
         return self.country, self.state, self.town
 
