@@ -3,7 +3,7 @@ from django.test import TestCase
 from feed.models import User, Company, Feed, Location, Website, Category
 
 
-user1=User.objects.create(
+user1 = User.objects.create(
     first_name="Jean",
     last_name="Skywalker",
     username="jeanSky",
@@ -19,6 +19,7 @@ company1 = Company.objects.create(
         is a privately held aerospace and space technologies \
             company headquartered in Louisville, Colorado.",
 )
+
 
 class UserTestCase(TestCase):
     def setUp(self):
@@ -66,7 +67,7 @@ class CompanyTestCase(TestCase):
             lat=self.lat1,
             long=self.long1,
             town="Louisville",
-            state = "Colorado"
+            state="Colorado",
             country="U.S.A.",
             company=company1,
         )
@@ -75,7 +76,7 @@ class CompanyTestCase(TestCase):
             lat=self.lat2,
             long=self.long2,
             town="Cedar Park",
-            state = "Texas"
+            state="Texas",
             country="U.S.A.",
             company=self.company2,
         )
@@ -89,25 +90,15 @@ class CompanyTestCase(TestCase):
 
 class FeedTestCase(TestCase):
     def setUp(self):
-        feed = Feed.objects.create(
-            name="feed1",
-            code=uuid.uuid4(),
-            owner=user1
-        )
+        feed = Feed.objects.create(name="feed1", code=uuid.uuid4(), owner=user1)
         feed.company.add(company1)
 
 
 class CategoryTestCase(TestCase):
     def setUp(self):
-        Category.objects.create(
-            name="Finance",
-            type=Category.CATEGORY_TYPES[0]
-        )
+        Category.objects.create(name="Finance", type=Category.CATEGORY_TYPES[0])
 
 
 class Post(TestCase):
     def setUp(self):
-        Post.objects.create(
-            content="Lorem ipsum upsum",
-            company=company1
-        )
+        Post.objects.create(content="Lorem ipsum upsum", company=company1)
