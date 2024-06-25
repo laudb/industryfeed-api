@@ -7,6 +7,16 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, null=True)
     country = models.CharField(max_length=100)
 
+    @property
+    def profile(self):
+        return {
+            "username": self.username,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "photo": self.profile_photo,
+            "country": self.country
+        }
+
     def __str__(self):
         return self.username
 
@@ -64,8 +74,18 @@ class Location(Common):
         related_query_name="%(app_label)s_%(class)ss",
     )
 
+    @property
+    def gps(self):
+        "Returns latitude, longitude."
+        return self.lat, self.long
+    
+    @property
+    def address(self)
+        "Returns country, state, town"
+        return self.country, self.state, self.town
+
     def __str__(self):
-        return self.lat, self.long, self.country
+        return self.country, self.lat, self.long
 
 
 class Website(Common):
