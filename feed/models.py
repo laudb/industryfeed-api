@@ -91,3 +91,16 @@ class Category(Common):
 
     def __str__(self):
         return self.name
+
+
+class Post(Common):
+    content = models.TextField()
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.DO_NOTHING,
+        related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss",
+    )
+
+    def __str__(self):
+        return f"{self.name}-{self.created_at}"
