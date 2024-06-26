@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "djoser",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
     # installed
     "feed",
 ]
@@ -122,7 +124,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.TokenAuthentication",
-    ]
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SIMPLE_JWT = {
@@ -135,4 +138,14 @@ DJOSER = {
     "ACTIVATION_URL": "#/activate/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": False,
     "SERIALIZERS": {},
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "SpaceFeed API",
+    "DESCRIPTION": "Your favourite companies social activity in one place",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
 }
