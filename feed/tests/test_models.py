@@ -3,17 +3,8 @@ from django.test import TestCase
 from feed.models import User, Company, Feed, Location, Website, Category
 
 
-user1 = User.objects.create(
-    first_name="Jean",
-    last_name="Skywalker",
-    username="jeanSky",
-    password="user-pass-0",
-    phone_number="+2330000000",
-    country="Belgium",
-)
-
 company1 = Company.objects.create(
-    signature=f"SNC-{uuid.uuid4()}",
+    signature=f"{uuid.uuid4()}",
     name="Sierra Nevada Corporation",
     details="Sierra Space Corporation, \
         is a privately held aerospace and space technologies \
@@ -42,7 +33,7 @@ class CompanyTestCase(TestCase):
         self.long2 = -97.81581810529522
 
         self.company2 = Company.objects.create(
-            signature=f"FA-{uuid.uuid4()}",
+            signature=f"{uuid.uuid4()}",
             name="Firefly Aerospace",
             details="Firefly Aerospace is an American private aerospace \
                 firm based in Cedar Park, Texas, that develops launch \
@@ -50,7 +41,7 @@ class CompanyTestCase(TestCase):
         )
 
         self.website1 = Website.objects.create(
-            name=self.company1.name,
+            name=company1.name,
             type=Website.WEBSITE_TYPES[0],
             url="https://www.sierraspace.com/",
             company=company1,
@@ -83,15 +74,23 @@ class CompanyTestCase(TestCase):
 
     def test_location_has_gps(self):
         """Created locations should return lat-long values"""
-        lat, long = self.location1.gps()
+        lat, long = self.location1.gps
         self.assertEqual(lat, self.lat1)
-        self.assertEqual(long, self.lat2)
+        self.assertEqual(long, self.long1)
 
 
 class FeedTestCase(TestCase):
     def setUp(self):
-        feed = Feed.objects.create(name="feed1", code=uuid.uuid4(), owner=user1)
-        feed.company.add(company1)
+        user1 = User.objects.create(
+            first_name="Jean",
+            last_name="Skywalker",
+            username="jeanSky",
+            password="user-pass-0",
+            phone_number="+2330000000",
+            country="Belgium",
+        )
+        # feed = Feed.objects.create(name="feed1", code=uuid.uuid4(), owner=user1)
+        # feed.company.add(company1)
 
 
 class CategoryTestCase(TestCase):
