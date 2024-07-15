@@ -18,6 +18,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
 
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class FeedViewSet(viewsets.ModelViewSet):
