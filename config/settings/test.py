@@ -11,6 +11,7 @@ ALLOWED_HOSTS = []
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / f"test_{os.getenv('DB_NAME')}",
-    },
+        "NAME": BASE_DIR / os.getenv("DB_NAME"),
+        "TEST": {"NAME": f"test_{os.getenv('DB_NAME')}"},
+    }
 }
