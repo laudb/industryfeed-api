@@ -3,101 +3,93 @@ from django.test import TestCase
 from feed.models import User, Company, Feed, Location, Website, Category
 
 
-company1 = Company.objects.create(
-    signature=f"{uuid.uuid4()}",
-    name="Sierra Nevada Corporation",
-    details="Sierra Space Corporation, \
-        is a privately held aerospace and space technologies \
-            company headquartered in Louisville, Colorado.",
-)
-
-
 class UserTestCase(TestCase):
     def setUp(self):
-        User.objects.create(
-            first_name="Niobe",
+        self.first_name = "Niobe"
+
+    def test_user_is_created(self):
+        """Created user should have first_name"""
+        self.user = User.objects.create(
+            first_name=self.first_name,
             last_name="Moonwalker",
             username="niomoon",
             password="user-pass-1",
             phone_number="+2331111111",
             country="Angola",
         )
+        self.assertEqual(self.user.first_name, self.first_name)
 
 
 class CompanyTestCase(TestCase):
-    def setUp(self):
 
-        self.lat1 = 39.96364609663782
-        self.long1 = -105.11771531999463
+    def setUp(self):
+        self.company_name = "Sierra Nevada Corporation"
+
+    def test_company_is_created(self):
+        """Created company should have name"""
+        company = Company.objects.create(
+            signature=f"{uuid.uuid4()}",
+            name=self.company_name,
+            details="Sierra Space Corporation, \
+                is a privately held aerospace and space technologies \
+                    company headquartered in Louisville, Colorado.",
+        )
+        self.assertEqual(company.name, self.company_name)
+
+
+class LocationTestCase(TestCase):
+
+    def setUp(self):
+        self.lat = 39.96364609663782
+        self.long = -105.11771531999463
         self.lat2 = 30.54705448592208
         self.long2 = -97.81581810529522
+        self.country = "U.S.A."
+        self.location_company_name = "Sierra Space Corp."
 
-        self.company2 = Company.objects.create(
+        self.location_company = Company.objects.create(
             signature=f"{uuid.uuid4()}",
-            name="Firefly Aerospace",
-            details="Firefly Aerospace is an American private aerospace \
-                firm based in Cedar Park, Texas, that develops launch \
-                    vehicles for commercial launches to orbit. ",
-        )
-
-        self.website1 = Website.objects.create(
-            name=company1.name,
-            type=Website.WEBSITE_TYPES[0],
-            url="https://www.sierraspace.com/",
-            company=company1,
-        )
-
-        self.website2 = Website.objects.create(
-            name=self.company2.name,
-            type=Website.WEBSITE_TYPES[0],
-            url="https://fireflyspace.com/",
-            company=self.company2,
-        )
-
-        self.location1 = Location.objects.create(
-            lat=self.lat1,
-            long=self.long1,
-            town="Louisville",
-            state="Colorado",
-            country="U.S.A.",
-            company=company1,
-        )
-
-        self.location2 = Location.objects.create(
-            lat=self.lat2,
-            long=self.long2,
-            town="Cedar Park",
-            state="Texas",
-            country="U.S.A.",
-            company=self.company2,
+            name=self.location_company_name,
+            details="Sierra Space Corp., \
+                is a privately held aerospace and space technologies \
+                    company headquartered in Louisville, Colorado.",
         )
 
     def test_location_has_gps(self):
         """Created locations should return lat-long values"""
-        lat, long = self.location1.gps
-        self.assertEqual(lat, self.lat1)
-        self.assertEqual(long, self.long1)
-
-
-class FeedTestCase(TestCase):
-    def setUp(self):
-        user1 = User.objects.create(
-            first_name="Jean",
-            last_name="Skywalker",
-            username="jeanSky",
-            password="user-pass-0",
-            phone_number="+2330000000",
-            country="Belgium",
+        location = Location.objects.create(
+            lat=self.lat,
+            long=self.long,
+            town="Louisville",
+            state="Colorado",
+            country=self.country,
+            company=self.location_company,
         )
-        # feed = Feed.objects.create(name="feed1", code=uuid.uuid4(), owner=user1)
-        # feed.company.add(company1)
+        lat, long = location.gps
+        self.assertEqual(lat, self.lat)
+        self.assertEqual(long, self.long)
 
 
-class CategoryTestCase(TestCase):
+class WebsiteTestCase(TestCase):
+
     def setUp(self):
-        Category.objects.create(name="Finance", type=Category.CATEGORY_TYPES[0])
+        self.website_company_name = "Sierra Space"
+        self.website_url = "https://www.sierraspace.com/"
+        self.website_company = Company.objects.create(
+            signature=f"{uuid.uuid4()}",
+            name=self.website_company_name,
+            details="Sierra Space, \
+                is a privately held aerospace and space technologies \
+                    company headquartered in Louisville, Colorado.",
+        )
 
+    def test_website_is_created(self):
+        """Created website should have url"""
+        website = Website.objects.create(
+            name=self.website_company_name,
+            type=Website.WEBSITE_TYPES[0],
+            url=self.website_url,
+            company=self.website_company,
+        )
 
-class Post(TestCase):
-    def setUp(self):
-        Post.objects.create(content="Lorem ipsum upsum", company=company1)
+        self.assertEqual(website.url, self.website_url)
