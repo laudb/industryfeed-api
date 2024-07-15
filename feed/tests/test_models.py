@@ -1,6 +1,6 @@
 import uuid
 from django.test import TestCase
-from feed.models import User, Company, Feed, Location, Website, Category
+from feed.models import User, Company, Location, Website
 
 
 class UserTestCase(TestCase):
