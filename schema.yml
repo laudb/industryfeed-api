@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: SpaceFeed API
+  title: Industry Feed API
   version: 1.0.0
   description: Your favourite companies social activity in one place
 paths:

@@ -1,5 +1,5 @@
 """
-WSGI config for SpaceFeedCore project.
+WSGI config for IndustryFeedCore project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

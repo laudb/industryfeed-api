@@ -1,4 +1,4 @@
-# SpaceFeed API (v1)
+# Industry Feed API (v1)
 ---
 A RESTful API service built with django REST Framework to provide data to a separate front-end application.
 
