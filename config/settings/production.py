@@ -3,6 +3,7 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+# ALLOWED HOST & CORS
 ALLOWED_HOSTS = []
 
 ALLOWED_HOST = os.environ.get("ALLOWED_HOST")
@@ -25,3 +26,14 @@ DATABASES = {
         conn_health_checks=os.getenv("DB_CONNECTION_HEALTCH_CHECKS"),
     )
 }
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
