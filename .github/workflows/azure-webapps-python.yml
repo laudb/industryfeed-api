@@ -20,7 +20,7 @@
 name: Build and deploy Python app to Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: ${{ secret.APP_NAME }}
+  AZURE_WEBAPP_NAME: ${{ secrets.APP_NAME }}
   PYTHON_VERSION: '3.10'
 
 on:
