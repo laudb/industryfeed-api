@@ -59,7 +59,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
 ROOT_URLCONF = "config.urls"
 
@@ -154,4 +153,23 @@ SPECTACULAR_SETTINGS = {
     "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
     "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
     "REDOC_DIST": "SIDECAR",
+}
+
+
+DEBUG = True
+
+# ALLOWED HOST & CORS
+ALLOWED_HOSTS = ["localhost"]
+
+# CORS_ALLOWED_ORIGINS = ["localhost"]
+
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.getenv("DB_CONNECTION_STRING"),
+        conn_max_age=int(os.getenv("DB_CONNECTION_MAX_AGE")),
+        conn_health_checks=os.getenv("DB_CONNECTION_HEALTCH_CHECKS"),
+    )
 }
