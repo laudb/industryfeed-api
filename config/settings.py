@@ -156,10 +156,12 @@ SPECTACULAR_SETTINGS = {
 }
 
 
-DEBUG = True
+DEBUG = False
 
 # ALLOWED HOST & CORS
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = (
+    [os.environ["WEBSITE_HOSTNAME"]] if "WEBSITE_HOSTNAME" in os.environ else []
+)
 
 # CORS_ALLOWED_ORIGINS = ["localhost"]
 
